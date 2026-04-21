@@ -1,0 +1,30 @@
+name: Run Career Ops
+
+on:
+  workflow_dispatch:
+    inputs:
+      job_url:
+        description: "Job posting URL"
+        required: true
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: |
+          npm install
+          npx playwright install chromium
+
+      - name: Run Career Ops
+        run: |
+          npx ts-node src/index.ts "${{ github.event.inputs.job_url }}"
