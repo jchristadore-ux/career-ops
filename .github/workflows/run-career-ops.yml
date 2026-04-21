@@ -25,6 +25,6 @@ jobs:
           npm install
           npx playwright install chromium
 
-      - name: Run Career Ops
+      - name: Check job posting liveness
         run: |
-          npx ts-node src/index.ts "${{ github.event.inputs.job_url }}"
+          npm run liveness -- "${{ github.event.inputs.job_url }}"
